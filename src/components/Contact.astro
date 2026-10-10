@@ -8,11 +8,11 @@
         <h2 id="contact-heading">Or Maybe Just<br /><em>Contact Us?</em></h2>
       </header>
       <div class="contact__details" data-reveal>
-        <div><h3>Address:</h3><p><strong>Ship’s Dock:</strong><br />Dockside of the land office.<br />Bus stop Nerstranda, 9008 Tromsø.</p><p><strong>Land Office:</strong><br />Norwegian Fjord Explorer Line AS<br />Strandgata 9, 9008 Tromsø, Norway.</p><a href="https://www.google.com/maps/search/?api=1&amp;query=Strandgata+9+9008+Tromso+Norway" target="_blank" rel="noopener noreferrer">Find Us <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a></div>
-        <div><h3>Call Us:</h3><p><strong>Onboard:</strong><br /><a href="tel:+4794791130">+47 947 91 130</a></p><p><strong>Group Travel:</strong><br /><a href="tel:+4792163985">+47 921 63 985</a></p><p><strong>Write an Email:</strong><br /><a class="contact__email" href="mailto:booking@norwegianfjordexplorer.com">booking@norwegianfjordexplorer.com</a></p></div>
+        <div id="contact-address"><h3>Address:</h3><p><strong>Ship’s Dock:</strong><br />Dockside of the land office.<br />Bus stop Nerstranda, 9008 Tromsø.</p><p><strong>Land Office:</strong><br />Norwegian Fjord Explorer Line AS<br />Strandgata 9, 9008 Tromsø, Norway.</p><a href="#contact-address">Find Us <span aria-hidden="true">↗</span></a></div>
+        <div id="contact-details"><h3>Call Us:</h3><p><strong>Onboard:</strong><br /><a href="#contact-form">+47 947 91 130</a></p><p><strong>Group Travel:</strong><br /><a href="#contact-form">+47 921 63 985</a></p><p><strong>Write an Email:</strong><br /><a class="contact__email" href="#contact-form">booking@norwegianfjordexplorer.com</a></p></div>
       </div>
     </div>
-    <form class="contact__form" data-reveal style="--reveal-delay:120ms" action="mailto:booking@norwegianfjordexplorer.com" method="post" enctype="text/plain">
+    <form id="contact-form" class="contact__form" data-reveal style="--reveal-delay:120ms" action="mailto:booking@norwegianfjordexplorer.com" method="post" enctype="text/plain">
       <div><label for="contact-name">Name:</label><input id="contact-name" name="name" autocomplete="name" maxlength="100" required /></div>
       <div><label for="contact-email">Email:</label><input id="contact-email" name="email" type="email" autocomplete="email" maxlength="254" required /></div>
       <div><label for="contact-phone">Phone: <span>(optional)</span></label><input id="contact-phone" name="phone" type="tel" autocomplete="tel" maxlength="50" /></div>

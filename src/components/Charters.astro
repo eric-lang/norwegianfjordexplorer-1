@@ -10,7 +10,7 @@ const charters=[
     <h2 id="charters-heading">Charter Possibilities</h2>
   </header>
   <div class="charters__grid">
-    {charters.map((charter,index)=><a class="charter-card" href="tel:+4794791130" aria-label={`${charter.title} — call to plan your charter`} data-reveal style={`--reveal-delay:${index*100}ms`}>
+    {charters.map((charter,index)=><a class="charter-card" href="#contact" aria-label={`${charter.title} — enquire about your charter`} data-reveal style={`--reveal-delay:${index*100}ms`}>
       <img src={`/images/charter-${index+1}.webp`} alt={charter.alt} width="1100" height="790" loading="lazy" />
       <span class="charter-card__shade" aria-hidden="true"></span>
       <span class="charter-card__arrow" aria-hidden="true">↗</span>

@@ -39,7 +39,7 @@ const stops = [
       <div class="stop-card__detail" id={`stop-detail-${stop.id}`} role="region" aria-labelledby={`stop-title-${stop.id}`} hidden>
         <button class="stop-card__close" type="button" aria-label={`Close ${stop.title} details`}>×</button>
         <div class="stop-card__detail-heading"><p class="stop-card__label"><span aria-hidden="true"></span>Discover</p><h3 id={`stop-title-${stop.id}`}>{stop.title}</h3></div>
-        <div class="stop-card__copy">{stop.paragraphs.map(text=><p>{text}</p>)}<a href={stop.link} target={stop.link.startsWith('https:')?'_blank':undefined} rel={stop.link.startsWith('https:')?'noopener noreferrer':undefined}>{stop.action} <span aria-hidden="true">↗</span>{stop.link.startsWith('https:') && <span class="sr-only"> (opens in a new tab)</span>}</a></div>
+        <div class="stop-card__copy">{stop.paragraphs.map(text=><p>{text}</p>)}<a href="#contact">{stop.action} <span aria-hidden="true">↗</span></a></div>
       </div>
     </article>)}
   </div>

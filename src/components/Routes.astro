@@ -19,7 +19,7 @@ const markers = routeStops.filter(stop => !('grouped' in stop) || stop.id === 's
         <p class="route-map__eyebrow" data-stop-region>{initialStop.region}</p>
         <h3 id="route-stop-title">{initialStop.name}</h3>
         <p data-stop-story>{initialStop.story}</p>
-        <a data-stop-source href={initialStop.source} target="_blank" rel="noopener noreferrer"><span data-stop-link-label>Discover {initialStop.name}</span> <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a>
+        <a data-stop-source href="#stops"><span data-stop-link-label>Discover {initialStop.name}</span> <span aria-hidden="true">↗</span></a>
         <button class="route-map__nearby" type="button" data-nearby-stop={initialStop.nearby}>Explore nearby: Harstad <span aria-hidden="true">→</span></button>
       </div>
       </div>
@@ -94,7 +94,7 @@ const markers = routeStops.filter(stop => !('grouped' in stop) || stop.id === 's
       popup.querySelector<HTMLElement>('[data-stop-region]')!.textContent = stop.region;
       popup.querySelector<HTMLElement>('#route-stop-title')!.textContent = stop.name;
       popup.querySelector<HTMLElement>('[data-stop-story]')!.textContent = stop.story;
-      popup.querySelector<HTMLAnchorElement>('[data-stop-source]')!.href = stop.source;
+      popup.querySelector<HTMLAnchorElement>('[data-stop-source]')!.href = '#stops';
       popup.querySelector<HTMLElement>('[data-stop-link-label]')!.textContent = `Discover ${stop.name}`;
       const nearby = popup.querySelector<HTMLButtonElement>('[data-nearby-stop]')!;
       nearby.dataset.nearbyStop = stop.nearby;

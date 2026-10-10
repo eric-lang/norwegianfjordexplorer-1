@@ -1,7 +1,7 @@
 ---
 import BookingLink from './BookingLink.astro';
 
-const navigation = ['Experiences', 'About', 'Vessel', 'Blog'];
+const navigation = ['Experiences', 'About', 'Vessel', 'Stories'];
 const destinations = [
   { label: 'Tromsø', tab: 'tromso' },
   { label: 'Lofoten & Vesterålen', tab: 'lofoten' },
@@ -9,15 +9,15 @@ const destinations = [
 ];
 ---
 
-<section class="hero" aria-labelledby="hero-heading">
+<section id="home" class="hero" aria-labelledby="hero-heading">
   <img class="hero__image" src="/images/arctic-fjord.webp" alt="An expedition ship cruising through a dramatic Norwegian fjord" width="1006" height="713" fetchpriority="high" loading="eager" />
   <div class="hero__shade" aria-hidden="true"></div>
 
   <header class="site-header">
     <nav class="desktop-nav" aria-label="Main navigation">
-      {navigation.map((label) => label === 'Experiences' ? <a href="#experiences" data-experience-tab="tromso">{label}</a> : label === 'About' ? <a href="#about" data-menu-link>{label}</a> : label === 'Vessel' ? <a href="#vessel" data-menu-link>{label}</a> : <button type="button" data-preview-label={label}>{label}</button>)}
+      {navigation.map((label) => label === 'Experiences' ? <a href="#experiences" data-experience-tab="tromso">{label}</a> : label === 'About' ? <a href="#about" data-menu-link>{label}</a> : label === 'Vessel' ? <a href="#vessel" data-menu-link>{label}</a> : <a href="#documentary" data-menu-link>{label}</a>)}
     </nav>
-    <a class="site-logo" href="/" aria-label="Norwegian Fjord Explorer home">
+    <a class="site-logo" href="#home" aria-label="Norwegian Fjord Explorer home">
       <img src="/images/explorer-logo.png" alt="Norwegian Explorer" width="53" height="53" />
     </a>
     <div class="header-booking"><BookingLink /></div>
@@ -25,7 +25,7 @@ const destinations = [
       <span></span><span></span>
     </button>
     <nav class="mobile-nav" id="mobile-menu" aria-label="Mobile navigation" hidden>
-      {navigation.map((label) => label === 'Experiences' ? <a href="#experiences" data-experience-tab="tromso" data-menu-link>{label}</a> : label === 'About' ? <a href="#about" data-menu-link>{label}</a> : label === 'Vessel' ? <a href="#vessel" data-menu-link>{label}</a> : <button type="button" data-preview-label={label}>{label}</button>)}
+      {navigation.map((label) => label === 'Experiences' ? <a href="#experiences" data-experience-tab="tromso" data-menu-link>{label}</a> : label === 'About' ? <a href="#about" data-menu-link>{label}</a> : label === 'Vessel' ? <a href="#vessel" data-menu-link>{label}</a> : <a href="#documentary" data-menu-link>{label}</a>)}
     </nav>
   </header>
 
@@ -52,7 +52,7 @@ const destinations = [
   <p class="section-dialog__eyebrow">Norwegian Fjord Explorer</p>
   <h2 id="section-dialog-title"></h2>
   <p>This section is coming next. In the meantime, speak with our team to plan your Arctic cruise.</p>
-  <a class="section-dialog__phone" href="tel:+4794791130">Call +47 947 91 130 <span aria-hidden="true">↗</span></a>
+  <a class="section-dialog__phone" href="#contact">Call +47 947 91 130 <span aria-hidden="true">↗</span></a>
 </dialog>
 
 <script>
@@ -93,7 +93,7 @@ const destinations = [
 </script>
 
 <style>
-  .hero { position: relative; isolation: isolate; min-height: 720px; height: max(100svh, 70.833333vw); max-height: 1300px; color: white; overflow: hidden; background: #152d32; }
+  .hero { position: relative; isolation: isolate; height: 100vh; color: white; overflow: hidden; background: #152d32; }
   .hero__image, .hero__shade { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; }
   .hero__image { object-fit: cover; object-position: center; }
   .hero__shade { background: linear-gradient(180deg, rgba(0, 0, 0, .63) 0%, rgba(0, 0, 0, .3) 46%, rgba(0, 0, 0, .52) 100%); }
@@ -127,7 +127,7 @@ const destinations = [
   @media (min-width: 1800px) { .site-header { padding-inline: 32px; } .hero__content { left: 32px; right: 32px; } }
   @media (max-width: 1000px) { .desktop-nav { gap: 18px; } .desktop-nav :is(button, a) { font-size: 15px; } .hero__content { grid-template-columns: 1fr 60%; } }
   @media (max-width: 760px) {
-    .hero { min-height: 780px; height: 100svh; max-height: none; }
+    .hero { height: 100vh; }
     .hero__image { object-position: 46% center; }
     .hero__shade { background: linear-gradient(180deg, rgb(0 0 0 / .5), rgb(0 0 0 / .15) 30%, rgb(0 0 0 / .65) 85%); }
     .site-header { padding: 16px 20px; grid-template-columns: auto 1fr auto; gap: 16px; }

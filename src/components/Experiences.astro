@@ -24,7 +24,7 @@ const captions = ['Stay a little longer. Explore a little further.', 'Slow morni
     <div class="experience-panel" role="tabpanel" id={`panel-${category.id}`} aria-labelledby={`tab-${category.id}`} tabindex="0" hidden={index !== 0}>
       <div class="experience-grid">
         {category.cards.map((card, cardIndex) => (
-          <a class="experience-card" href="tel:+4794791130" aria-label={`Ask about ${card.title} — call Norwegian Fjord Explorer`} data-reveal style={`--reveal-delay: ${(cardIndex % 3) * 90}ms`}>
+          <a class="experience-card" href="#contact" aria-label={`Ask about ${card.title} — contact Norwegian Fjord Explorer`} data-reveal style={`--reveal-delay: ${(cardIndex % 3) * 90}ms`}>
             <div class="experience-card__photo">
               <img src={`/images/${card.image}.webp`} alt={card.alt} width="960" height="754" loading="lazy" decoding="async" />
               <span class="experience-card__arrow" aria-hidden="true"><Arrow /></span>

@@ -4,7 +4,7 @@ interface Props { variant?: 'cream' | 'red'; hover?: 'navy'; class?: string; }
 const { variant = 'cream', hover, class: className } = Astro.props;
 ---
 
-<a class:list={['booking-link', `booking-link--${variant}`, { 'booking-link--hover-navy': hover === 'navy' }, className]} href="tel:+4794791130" aria-label="Book now — call Norwegian Fjord Explorer">
+<a class:list={['booking-link', `booking-link--${variant}`, { 'booking-link--hover-navy': hover === 'navy' }, className]} href="#contact" aria-label="Book now — contact Norwegian Fjord Explorer">
   <span class="booking-link__arrow booking-link__arrow--leading" aria-hidden="true"><Arrow /></span>
   <span class="booking-link__label">Book Now</span>
   <span class="booking-link__arrow booking-link__arrow--trailing" aria-hidden="true"><Arrow /></span>
