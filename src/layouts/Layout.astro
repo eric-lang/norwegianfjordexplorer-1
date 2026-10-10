@@ -1,0 +1,32 @@
+---
+import '../styles/global.css';
+import ScrollReveal from '../components/ScrollReveal.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Norwegian Fjord Explorer — Authentic Arctic Cruises',
+  description = 'Discover Norway’s Arctic coast with Norwegian Fjord Explorer. Authentic cruises, local food, and unforgettable views aboard Fjord Visjon.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#0f1f38" />
+    <link rel="icon" type="image/png" href="/images/explorer-logo.png" />
+    <link rel="preload" as="image" href="/images/arctic-fjord.webp" fetchpriority="high" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <slot />
+    <ScrollReveal />
+  </body>
+</html>

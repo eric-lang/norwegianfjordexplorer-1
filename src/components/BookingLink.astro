@@ -1,0 +1,21 @@
+---
+import Arrow from './Arrow.astro';
+interface Props { variant?: 'cream' | 'red'; class?: string; }
+const { variant = 'cream', class: className } = Astro.props;
+---
+
+<a class:list={['booking-link', `booking-link--${variant}`, className]} href="tel:+4794791130" aria-label="Book now — call Norwegian Fjord Explorer">
+  <span class="booking-link__label">Book Now</span>
+  <span class="booking-link__arrow"><Arrow /></span>
+</a>
+
+<style>
+  .booking-link { --cta-height: 44px; --cta-background: var(--cream); --cta-color: var(--navy); display: inline-flex; align-items: center; gap: 0; width: max-content; text-decoration: none; color: var(--cta-color); transition: color 220ms ease; }
+  .booking-link__label { display: flex; align-items: center; justify-content: center; height: var(--cta-height); min-width: 112px; border-radius: 999px; padding: 0 23px; background: var(--cta-background); font-size: 13px; line-height: 1; font-weight: 700; white-space: nowrap; transition: background-color 220ms ease; }
+  .booking-link__arrow { display: flex; align-items: center; justify-content: center; flex: 0 0 var(--cta-height); width: var(--cta-height); height: var(--cta-height); border-radius: 50%; background: var(--cta-background); transition: background-color 220ms ease; }
+  .booking-link__arrow :global(svg) { display: block; flex: none; width: 18px; height: 18px; }
+  .booking-link--red { --cta-background: var(--red); --cta-color: var(--cream); }
+  .booking-link:is(:hover, :focus-visible) { --cta-background: var(--red); --cta-color: var(--cream); }
+  .booking-link--red:is(:hover, :focus-visible) { --cta-background: var(--cream); --cta-color: var(--navy); }
+  @media (prefers-reduced-motion: reduce) { .booking-link, .booking-link__label, .booking-link__arrow { transition: none; } }
+</style>

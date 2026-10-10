@@ -1,0 +1,126 @@
+---
+const stops = [
+  {id:'dock', title:'Our Main Dock', image:'stop-dock', alt:'Explorer vessels moored in a snowy Norwegian harbour', paragraphs:[
+    'Our Arctic cruiser explores Northern Norway from our bases in Tromsø and Lofoten.',
+    'In Tromsø, we depart from historic Fridtjof Nansens plass, close to the city centre.',
+    'Our Svolvær base in Lofoten: 68°13′44.4″N, 14°33′42.1″E.',
+    'The dock in Stokmarknes, Vesterålen: 68°34′09.5″N, 14°54′46.4″E. These coastal bases connect your journey with the surrounding fjords and islands.',
+  ], link:'https://www.google.com/maps/search/?api=1&query=Fridtjof+Nansens+plass+Tromso', action:'Find the Tromsø dock'},
+  {id:'island', title:'The Tromsø Main Island', image:'stop-island', alt:'Aerial view over Tromsø island, its waterfront and surrounding mountains', paragraphs:[
+    'See the Arctic capital from the water, with the island’s waterfront framed by mountains and the Tromsø Sound.',
+    'The harbour connects city life with the fishing and polar-expedition stories that shaped Tromsø. Begin at the waterfront, then take your time exploring ashore.',
+  ], link:'https://www.visittromso.no/polar-history', action:'Explore Tromsø’s story'},
+  {id:'city', title:'The Magic of the Arctic Capital', image:'stop-city', alt:'Warmly lit streets and wooden buildings in Tromsø at night', paragraphs:[
+    'Step from the ship into the city’s warm street life: wooden buildings, local flavours, and places to linger between adventures.',
+    'Tromsø’s polar history is part of everyday life. The Polar Museum tells the stories of expeditions, trappers, and the people who made the Arctic their home.',
+  ], link:'https://www.visittromso.no/polar-history', action:'Discover the Arctic capital'},
+  {id:'cathedral', title:'The Bridge & Arctic Cathedral', image:'stop-cathedral', alt:'The distinctive angular architecture of the Arctic Cathedral', paragraphs:[
+    'Across the Tromsø Sound, the bridge connects the island with Tromsdalen and the Arctic Cathedral.',
+    'Designed by Jan Inge Hovig and dedicated in 1965, the church’s striking form draws inspiration from Arctic nature. Its glass mosaic adds another perspective once you step inside.',
+  ], link:'https://www.visittromso.no/arctic-cathedral', action:'Discover the Arctic Cathedral'},
+  {id:'captain', title:'Join the Captain on His Private Tour to the Secret Bars and Hideaways in Tromsø', image:'stop-captain', alt:'The captain in a red jacket and knitted hat on the waterfront', paragraphs:[
+    'See Tromsø through a local’s eyes. Ask the captain about the city’s tucked-away corners, favourite places, and stories from life along the coast.',
+    'Tell us what you enjoy—local food, harbour history, or a relaxed evening ashore—and talk with the crew about making it part of your visit.',
+  ], link:'tel:+4794791130', action:'Talk with the crew'},
+];
+---
+<section class="stops" id="stops" aria-labelledby="stops-heading">
+  <header class="stops__header" data-reveal>
+    <p class="stops__eyebrow"><span aria-hidden="true"></span>Stops</p>
+    <h2 id="stops-heading">Come Sail With Us</h2>
+  </header>
+  <div class="stops__grid">
+    {stops.map((stop,i) => <article class:list={['stop-card', {'stop-card--wide':i === stops.length-1}]} data-reveal style={`--reveal-delay:${i%2*100}ms`}>
+      <button class="stop-card__trigger" type="button" aria-expanded="false" aria-controls={`stop-detail-${stop.id}`} aria-label={`Discover ${stop.title}`}>
+        <img src={`/images/${stop.image}.webp`} alt={stop.alt} width={i===4?1600:1000} height="720" loading="lazy" />
+        <span class="stop-card__shade" aria-hidden="true"></span>
+        <span class="stop-card__caption"><span class="stop-card__label"><span aria-hidden="true"></span>Discover</span><span class="stop-card__title">{stop.title}</span></span>
+      </button>
+      <div class="stop-card__detail" id={`stop-detail-${stop.id}`} role="region" aria-labelledby={`stop-title-${stop.id}`} hidden>
+        <button class="stop-card__close" type="button" aria-label={`Close ${stop.title} details`}>×</button>
+        <div class="stop-card__detail-heading"><p class="stop-card__label"><span aria-hidden="true"></span>Discover</p><h3 id={`stop-title-${stop.id}`}>{stop.title}</h3></div>
+        <div class="stop-card__copy">{stop.paragraphs.map(text=><p>{text}</p>)}<a href={stop.link} target={stop.link.startsWith('https:')?'_blank':undefined} rel={stop.link.startsWith('https:')?'noopener noreferrer':undefined}>{stop.action} <span aria-hidden="true">↗</span>{stop.link.startsWith('https:') && <span class="sr-only"> (opens in a new tab)</span>}</a></div>
+      </div>
+    </article>)}
+  </div>
+</section>
+<script>
+  const cards=Array.from(document.querySelectorAll<HTMLElement>('.stop-card'));
+  const motion=window.matchMedia('(prefers-reduced-motion: reduce)');
+  const animations=new Map<HTMLElement,Animation>();
+  function setOpen(card:HTMLElement, open:boolean, focus=false) {
+    const trigger=card.querySelector<HTMLButtonElement>('.stop-card__trigger')!;
+    const detail=card.querySelector<HTMLElement>('.stop-card__detail')!;
+    const from=Number(getComputedStyle(card).getPropertyValue('--stop-progress')) || 0;
+    animations.get(card)?.cancel();
+    trigger.setAttribute('aria-expanded',String(open));
+    card.classList.toggle('is-open',open);
+    detail.inert=!open;
+    detail.setAttribute('aria-hidden',String(!open));
+    detail.hidden=false;
+    if(focus) (open ? detail.querySelector<HTMLButtonElement>('.stop-card__close')! : trigger).focus({preventScroll:true});
+    if(motion.matches) {detail.hidden=!open;return;}
+    const to=open ? 1 : 0;
+    const animation=card.animate([{'--stop-progress':String(from)},{'--stop-progress':String(to)}],{duration:Math.max(100,650*Math.abs(to-from)),easing:'cubic-bezier(.22,1,.36,1)',fill:'both'});
+    animations.set(card,animation);
+    animation.finished.then(()=>{
+      if(animations.get(card)!==animation)return;
+      detail.hidden=!open;
+      animation.cancel();
+      animations.delete(card);
+    }).catch(()=>{});
+  }
+  cards.forEach(card=>{
+    const trigger=card.querySelector<HTMLButtonElement>('.stop-card__trigger')!;
+    trigger.addEventListener('click',()=>{
+      const open=trigger.getAttribute('aria-expanded')!=='true';
+      if(open) cards.filter(other=>other!==card&&other.classList.contains('is-open')).forEach(other=>setOpen(other,false));
+      setOpen(card,open,open);
+    });
+    card.querySelector('.stop-card__close')?.addEventListener('click',()=>setOpen(card,false,true));
+    card.addEventListener('keydown',event=>{if(event.key==='Escape'&&card.classList.contains('is-open')){event.preventDefault();setOpen(card,false,true);}});
+  });
+  document.addEventListener('pointerdown',event=>{
+    if(!(event.target instanceof Node))return;
+    cards.filter(card=>card.classList.contains('is-open')&&!card.contains(event.target as Node)).forEach(card=>setOpen(card,false));
+  });
+  motion.addEventListener('change',()=>{if(motion.matches)cards.forEach(card=>{animations.get(card)?.cancel();animations.delete(card);if(!card.classList.contains('is-open'))card.querySelector<HTMLElement>('.stop-card__detail')!.hidden=true;});});
+</script>
+<style>
+  @property --stop-progress {syntax:"<number>";inherits:true;initial-value:0;}
+  .stops {padding:110px 16px 120px;background:#0f1f38;color:var(--cream);}
+  .stops__header {margin-bottom:80px;}
+  .stops__eyebrow {display:flex;justify-content:flex-end;align-items:center;gap:12px;margin:0 0 32px;padding-bottom:24px;border-bottom:1px solid rgb(255 250 231 / .25);font-size:18px;}
+  .stops__eyebrow span {width:10px;height:10px;background:var(--red);}
+  .stops h2 {margin:0;font:400 clamp(42px,5vw,72px)/1.1 Georgia,serif;letter-spacing:-.045em;}
+  .stops__grid {display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .stop-card {--stop-progress:0;--stop-image-share:64%;--stop-title-size:40px;position:relative;height:500px;min-width:0;overflow:hidden;border:0;border-radius:5px;background:#1d1d1d;}
+  .stop-card::after {content:"";position:absolute;inset:0;z-index:5;pointer-events:none;border-radius:5px;padding:1px;background:linear-gradient(90deg,transparent,#740e0e);mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask-composite:exclude;opacity:0;transition:opacity 250ms;}
+  .stop-card.is-open {--stop-progress:1;}
+  .stop-card::after {opacity:var(--stop-progress);}
+  .stop-card--wide {grid-column:1/-1;}
+  .stop-card__trigger {position:absolute;inset:0 auto 0 0;z-index:3;width:calc(100% - var(--stop-image-share)*var(--stop-progress));padding:0;border:0;background:#1d1d1d;color:var(--cream);text-align:left;cursor:pointer;overflow:hidden;}
+  .stop-card__trigger img {display:block;width:100%;height:100%;object-fit:cover;transform:scale(1.04);transition:transform 800ms cubic-bezier(.16,1,.3,1);}
+  .stop-card__trigger:hover img {transform:scale(1);}
+  .stop-card__shade {position:absolute;inset:0;background:linear-gradient(180deg,rgb(0 0 0 / .25),rgb(0 0 0 / .3) 45%,rgb(0 0 0 / .75));}
+  .stop-card__caption {position:absolute;bottom:24px;left:24px;right:24px;display:flex;flex-direction:column;gap:12px;transform-origin:bottom left;}
+  .stop-card__label {display:flex;align-items:center;gap:7px;color:var(--red);font:700 14px/1.5 var(--font-body);text-transform:uppercase;margin:0;}
+  .stop-card__label span {width:8px;height:8px;flex-shrink:0;border-radius:50%;background:var(--cream);}
+  .stop-card__title {font:400 40px/1.2 Georgia,serif;color:#fff;}
+  .stop-card__caption .stop-card__label {font-size:calc(14px - 4px*var(--stop-progress));}
+  .stop-card.is-open .stop-card__caption {right:24px;}
+  
+  .stop-card__caption .stop-card__title {font-size:calc(var(--stop-title-size) + (24px - var(--stop-title-size))*var(--stop-progress));}
+  .stop-card__detail {position:absolute;inset:0 0 0 36%;z-index:2;display:flex;flex-direction:column;justify-content:space-between;gap:20px;padding:24px 12px 12px;background:#1d1d1d;overflow-y:auto;clip-path:inset(0 0 0 calc(100% - 100%*var(--stop-progress)));will-change:clip-path;}
+  .stop-card__detail-heading {padding:0 16px 0 12px;}
+  .stop-card h3 {font:400 40px/1.2 Georgia,serif;color:#fff;margin:12px 0 0;}
+  .stop-card__copy {border-radius:3px;background:#eae1c1;color:var(--navy);padding:14px 12px;}
+  .stop-card__copy p {font-size:14px;line-height:1.5;margin:0 0 12px;}
+  .stop-card__copy a {font-size:13px;font-weight:700;text-underline-offset:4px;}
+  .stop-card__copy a:hover {color:var(--red);}
+  .stop-card__close {position:absolute;top:8px;right:8px;width:32px;height:32px;border:0;border-radius:50%;font-size:25px;line-height:1;background:#1d1d1d;color:var(--cream);cursor:pointer;}
+  .stop-card__close:hover {background:var(--cream);color:var(--navy);}
+  [hidden] {display:none!important;}
+  @media(max-width:760px) {.stops {padding:64px 16px;}.stops__header {margin-bottom:36px;}.stops__eyebrow {font-size:14px;margin-bottom:24px;padding-bottom:16px;}.stops__grid {grid-template-columns:1fr;gap:12px;}.stop-card {height:500px;--stop-image-share:72%;--stop-title-size:30px;}.stop-card__caption {left:16px;right:16px;bottom:20px;}.stop-card__title {font-size:30px;}.stop-card__detail {left:28%;padding:24px 8px 8px;}.stop-card__detail-heading {padding:0 12px 0 4px;}.stop-card h3 {font-size:24px;}.stop-card__copy {padding:12px 10px;}.stop-card__copy p {font-size:13px;}.stop-card__label {font-size:11px;}.stop-card__caption .stop-card__label {font-size:calc(11px - var(--stop-progress)*1px);}.stop-card.is-open .stop-card__caption {left:12px;right:8px;}}
+  @media(prefers-reduced-motion:reduce) {.stop-card__trigger,.stop-card__trigger img,.stop-card__caption,.stop-card__title,.stop-card__label,.stop-card::after {transition:none;}}
+</style>

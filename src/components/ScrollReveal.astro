@@ -1,0 +1,17 @@
+<script>
+  const targets = Array.from(document.querySelectorAll<HTMLElement>('[data-reveal]'));
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  if (!reducedMotion.matches && 'IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-revealed');
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.08 });
+    targets.forEach((target) => { target.classList.add('reveal-pending'); observer.observe(target); });
+    reducedMotion.addEventListener('change', (event) => {
+      if (event.matches) { targets.forEach((target) => target.classList.add('is-revealed')); observer.disconnect(); }
+    });
+  }
+</script>

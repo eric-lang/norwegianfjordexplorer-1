@@ -1,0 +1,50 @@
+---
+const charters=[
+  {title:'Adventure Cruise to Lofoten & Lyngsalpene With Bike or Ski',alt:'View over the blue fjord and coastal landscape of Northern Norway',description:'Bring your sense of adventure. Talk with the crew about combining days on the water with cycling or skiing ashore.'},
+  {title:'On the Loose Between Tromsø, Senja, Vesterålen, Lofoten',alt:'Guests carrying skis along a snowy waterfront before an Arctic adventure',description:'Make the journey your own. Plan a private cruise through the islands and fjords with Captain Mads and his team.'},
+];
+---
+<section class="charters" id="charters" aria-labelledby="charters-heading">
+  <header class="charters__header" data-reveal>
+    <p class="charters__label"><span aria-hidden="true"></span>Charter</p>
+    <h2 id="charters-heading">Charter Possibilities</h2>
+  </header>
+  <div class="charters__grid">
+    {charters.map((charter,index)=><a class="charter-card" href="tel:+4794791130" aria-label={`${charter.title} — call to plan your charter`} data-reveal style={`--reveal-delay:${index*100}ms`}>
+      <img src={`/images/charter-${index+1}.webp`} alt={charter.alt} width="1100" height="790" loading="lazy" />
+      <span class="charter-card__shade" aria-hidden="true"></span>
+      <span class="charter-card__arrow" aria-hidden="true">↗</span>
+      <div class="charter-card__caption">
+        <p class="charter-card__label"><span aria-hidden="true"></span>Charter</p>
+        <h3>{charter.title}</h3>
+        <div class="charter-card__extra"><p>{charter.description}</p><span>Plan Your Charter <span aria-hidden="true">↗</span></span></div>
+      </div>
+    </a>)}
+  </div>
+</section>
+<style>
+  .charters {padding:120px 16px;background:var(--cream);color:var(--navy);}
+  .charters__header {margin-bottom:80px;}
+  .charters__label {display:flex;justify-content:flex-end;align-items:center;gap:12px;margin:0 0 40px;padding-bottom:16px;border-bottom:1px solid rgb(27 54 97 / .25);font:500 18px/1.5 var(--font-body);}
+  .charters__label span {width:10px;height:10px;background:var(--red);}
+  .charters h2 {margin:0;color:#1e1e1e;font:400 clamp(42px,5vw,72px)/1.05 Georgia,serif;letter-spacing:-.045em;}
+  .charters__grid {display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .charter-card {position:relative;display:block;height:500px;overflow:hidden;border-radius:5px;color:#fff;text-decoration:none;background:var(--navy);}
+  .charter-card img {width:100%;height:100%;display:block;object-fit:cover;transform:scale(1.05);transition:transform 850ms cubic-bezier(.22,1,.36,1);}
+  .charter-card__shade {position:absolute;inset:0;background:linear-gradient(180deg,rgb(0 0 0 / .3),rgb(0 0 0 / .2) 35%,rgb(0 0 0 / .7));transition:background-color 400ms;}
+  .charter-card__caption {position:absolute;left:24px;right:24px;bottom:24px;}
+  .charter-card__label {display:flex;align-items:center;gap:6px;margin:0 0 8px;color:var(--red);font:700 14px/1.5 var(--font-body);text-transform:uppercase;}
+  .charter-card__label span {width:10px;height:10px;background:#fff;border-radius:50%;}
+  .charter-card h3 {margin:0;font:400 40px/1.2 Georgia,serif;letter-spacing:-.045em;}
+  .charter-card__arrow {position:absolute;top:24px;right:24px;display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:var(--cream);color:var(--navy);font-size:24px;opacity:0;transform:translateY(8px);transition:opacity 350ms,transform 350ms;}
+  .charter-card__extra {opacity:0;max-height:0;overflow:hidden;transition:max-height 500ms cubic-bezier(.22,1,.36,1),opacity 350ms;}
+  .charter-card__extra p {margin:16px 0 12px;font:500 16px/1.5 var(--font-body);}
+  .charter-card__extra>span {font-size:14px;font-weight:700;}
+  .charter-card:is(:hover,:focus-visible) img {transform:scale(1);}
+  .charter-card:is(:hover,:focus-visible) .charter-card__shade {background-color:rgb(0 0 0 / .15);}
+  .charter-card:is(:hover,:focus-visible) .charter-card__arrow {opacity:1;transform:none;}
+  .charter-card:is(:hover,:focus-visible) .charter-card__extra {max-height:180px;opacity:1;}
+  @media(max-width:760px) {.charters {padding:64px 16px;}.charters__header {margin-bottom:36px;}.charters__label {font-size:14px;margin-bottom:24px;}.charters__grid {grid-template-columns:1fr;gap:12px;}.charter-card {height:460px;}.charter-card__caption {left:20px;right:20px;bottom:20px;}.charter-card h3 {font-size:30px;}.charter-card__extra p {font-size:14px;}}
+  @media(hover:none) {.charter-card__extra {max-height:180px;opacity:1;}.charter-card__arrow {opacity:1;transform:none;}}
+  @media(prefers-reduced-motion:reduce) {.charter-card img,.charter-card__shade,.charter-card__arrow,.charter-card__extra {transition:none;}}
+</style>

@@ -1,0 +1,41 @@
+---
+import BookingLink from './BookingLink.astro';
+---
+<section class="about" id="about" aria-labelledby="about-heading">
+  <header class="about__header">
+    <p class="about__label" data-reveal><span aria-hidden="true"></span>About</p>
+    <h2 id="about-heading" data-reveal><em>Captain Mads</em> Is<br />Your Host.</h2>
+  </header>
+  <div class="about__layout">
+    <div class="about__photo" data-reveal>
+      <img src="/images/captain-and-crew.webp" alt="Captain Mads welcomes you with his crew beside the explorer vessel" width="1394" height="1000" loading="lazy" />
+    </div>
+    <div class="about__content">
+      <p class="about__welcome" data-reveal style="--reveal-delay:100ms">Welcome to My World!<br />The Team on Tour, Come and Join Us.</p>
+      <div class="about__story" data-reveal style="--reveal-delay:180ms">
+        <p>Mads comes from a family rich in traditions and is also the captain in the TV series.</p>
+        <p>You are very welcome to come and say hello in the wheelhouse, learn about polar navigation, and hear the stories.</p>
+        <BookingLink variant="red" />
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+  .about {padding:120px 16px;background:var(--cream);color:var(--navy);}
+  .about__header {margin-bottom:32px;}
+  .about__label {display:flex;align-items:center;justify-content:flex-end;gap:12px;border-bottom:1px solid rgb(27 54 97 / .25);margin:0 0 10px;padding-bottom:16px;font:500 18px/1.5 var(--font-body);}
+  .about__label span {width:10px;height:10px;background:var(--red);}
+  .about h2 {max-width:1000px;margin:0;color:#1e1e1e;font:400 clamp(52px,8.333vw,120px)/1.1 Georgia,serif;letter-spacing:-.045em;}
+  .about h2 em {font-weight:400;}
+  .about__layout {display:grid;grid-template-columns:958fr 386fr;gap:64px;align-items:stretch;}
+  .about__photo {aspect-ratio:958/661;overflow:hidden;border-radius:5px;}
+  .about__photo img {display:block;width:100%;height:100%;object-fit:cover;transform:scale(1.035);transition:transform 900ms cubic-bezier(.22,1,.36,1);}
+  .about__photo:hover img {transform:scale(1);}
+  .about__content {display:flex;flex-direction:column;justify-content:space-between;gap:40px;min-width:0;}
+  .about__welcome {margin:0;color:var(--red);font:400 32px/1.4 Georgia,serif;letter-spacing:-.045em;}
+  .about__story p {margin:0 0 10px;font:700 18px/1.5 var(--font-body);}
+  .about__story :global(.booking-link) {margin-top:22px;}
+  @media(max-width:1000px) and (min-width:761px) {.about__layout {gap:32px;grid-template-columns:2fr 1fr;}.about__welcome {font-size:27px;}.about__story p {font-size:16px;}}
+  @media(max-width:760px) {.about {padding:64px 16px;}.about__label {font-size:14px;}.about h2 {font-size:clamp(44px,8.8vw,66px);}.about__layout {grid-template-columns:1fr;gap:28px;}.about__content {gap:28px;}.about__welcome {font-size:28px;}.about__story p {font-size:16px;}}
+  @media(prefers-reduced-motion:reduce) {.about__photo img {transition:none;transform:none;}}
+</style>

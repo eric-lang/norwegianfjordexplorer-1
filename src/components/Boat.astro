@@ -1,0 +1,122 @@
+---
+const offerings = [
+  { label: 'Bar & Bistro', image: 'boat-bistro', alt: 'Wood-panelled dining room and bistro aboard the explorer ship', copy: 'Step aboard and enjoy a warm, intimate atmosphere designed for comfort, connection, and unforgettable views.' },
+  { label: 'Classic Cruiser with Cozy Intimate Style', image: 'explorer-ship', alt: 'The classic Norwegian explorer ship on the water', copy: 'Discover a classic cruiser with a character all its own. Settle into life aboard, share stories, and watch the Norwegian coast unfold.' },
+  { label: 'Food & Drinks', image: 'onboard-breakfast', alt: 'Breakfast and drinks served aboard the ship', copy: 'Take your time over good food and a drink beside the sea. From a relaxed breakfast to an evening together, every table comes with a view.' },
+  { label: 'Charters', image: 'island-cruise', alt: 'The explorer ship travelling along the Norwegian coast', copy: 'Make the ship your own for a gathering, celebration, or coastal adventure. Bring your people together and plan a journey around you.' },
+];
+---
+<section class="boat" id="vessel" aria-labelledby="boat-heading">
+  <header class="boat__header">
+    <h2 id="boat-heading"><span class="sr-only">The Boat</span><img src="/images/boat-heading.svg" alt="" width="444" height="132" aria-hidden="true" /></h2>
+  </header>
+  <div class="boat__runway">
+  <div class="boat__sticky">
+  <p class="boat__eyebrow"><span aria-hidden="true"></span>Service Offerings</p>
+  <div class="boat__stage">
+    <div class="boat__card">
+      <h3>What We Serve</h3>
+      <div class="boat__tabs" role="tablist" aria-label="What we serve aboard" aria-orientation="vertical">
+        {offerings.map((item, i) => <button type="button" role="tab" id={`boat-tab-${i}`} aria-controls={`boat-panel-${i}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}><span class="boat__dot" aria-hidden="true"></span><span>{item.label}</span></button>)}
+      </div>
+      <div class="boat__descriptions" aria-live="polite" aria-atomic="true">
+        {offerings.map((item, i) => <p data-boat-copy hidden={i !== 0}>{item.copy}</p>)}
+      </div>
+    </div>
+    <div class="boat__photos">
+      {offerings.map((item, i) => <div class="boat__panel" id={`boat-panel-${i}`} role="tabpanel" aria-labelledby={`boat-tab-${i}`} tabindex="0" hidden={i !== 0}><img src={`/images/${item.image}.webp`} alt={item.alt} width="1200" height="1368" loading="lazy" /></div>)}
+    </div>
+  </div>
+  </div>
+  </div>
+</section>
+<script>
+  const boat = document.querySelector<HTMLElement>('#vessel');
+  if (boat) {
+    const tabs = Array.from(boat.querySelectorAll<HTMLButtonElement>('[role="tab"]'));
+    const panels = Array.from(boat.querySelectorAll<HTMLElement>('[role="tabpanel"]'));
+    const copies = Array.from(boat.querySelectorAll<HTMLElement>('[data-boat-copy]'));
+    const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let active = 0;
+    let lastWheel = 0;
+    let lastWheelEvent = 0;
+    let wheelTotal = 0;
+    let previousDirection = 0;
+    let anims: Animation[] = [];
+    function select(index: number, focus = false) {
+      if (index === active) { if (focus) tabs[index].focus(); return; }
+      const forward = index > active;
+      anims.forEach(a => a.cancel());
+      active = index;
+      tabs.forEach((tab, i) => { tab.setAttribute('aria-selected', String(i === index)); tab.tabIndex = i === index ? 0 : -1; panels[i].hidden = i !== index; copies[i].hidden = i !== index; });
+      if (!motion.matches) {
+        const clip = forward ? 'inset(100% 0 0 0)' : 'inset(0 0 100% 0)';
+        anims = [
+          panels[index].animate([{clipPath: clip}, {clipPath: 'inset(0 0 0 0)'}], {duration:850, easing:'cubic-bezier(.16,1,.3,1)'}),
+          panels[index].querySelector('img')!.animate([{transform:'scale(1.08)'}, {transform:'scale(1)'}], {duration:1100, easing:'cubic-bezier(.16,1,.3,1)'}),
+          copies[index].animate([{clipPath:clip, opacity:0, transform:`translateY(${forward ? 12 : -12}px)`}, {clipPath:'inset(0 0 0 0)', opacity:1, transform:'translateY(0)'}], {duration:650, easing:'cubic-bezier(.16,1,.3,1)'}),
+        ];
+      }
+      if (focus) tabs[index].focus({preventScroll:true});
+    }
+    tabs.forEach((tab, i) => {
+      tab.addEventListener('click', () => select(i));
+      tab.addEventListener('keydown', e => {
+        let next = i;
+        if (e.key === 'ArrowDown' || e.key === 'ArrowRight') next = (i + 1) % tabs.length;
+        else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') next = (i - 1 + tabs.length) % tabs.length;
+        else if (e.key === 'Home') next = 0;
+        else if (e.key === 'End') next = tabs.length - 1;
+        else return;
+        e.preventDefault(); select(next, true);
+      });
+    });
+    boat.querySelector('.boat__stage')?.addEventListener('wheel', ((e: WheelEvent) => {
+      if (e.ctrlKey || Math.abs(e.deltaX) > Math.abs(e.deltaY) || !e.deltaY) return;
+      const rect = boat!.querySelector('.boat__stage')!.getBoundingClientRect();
+      const sticky = boat!.querySelector('.boat__sticky')!.getBoundingClientRect();
+      // Let the page reach the border's pin point before wheel gestures select tabs.
+      if (sticky.top > 1 || sticky.top < -1 || rect.bottom > window.innerHeight + 24) return;
+      const direction = Math.sign(e.deltaY);
+      const next = active + direction;
+      const now = performance.now();
+      if (now - lastWheel < 850 && direction === previousDirection) { e.preventDefault(); return; }
+      if (next < 0 || next >= tabs.length) return;
+      e.preventDefault();
+      if (now - lastWheelEvent > 180 || direction !== previousDirection) wheelTotal = 0;
+      lastWheelEvent = now;
+      previousDirection = direction;
+      wheelTotal += Math.abs(e.deltaY) * (e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? innerHeight : 1);
+      if (wheelTotal >= 35) { select(next); wheelTotal = 0; lastWheel = now; previousDirection = direction; }
+    }) as EventListener, {passive:false});
+  }
+</script>
+<style>
+  .boat { padding: 110px 16px; background: var(--cream); color: var(--navy); scroll-margin-top: 24px; }
+  .boat__header { margin-bottom: 40px; }
+  .boat__runway { min-height: calc(max(360px, min(797px, 100svh - 110px)) + 63px + clamp(240px, 55svh, 640px)); }
+  .boat__sticky { position: sticky; top: 0; }
+  .boat h2 { margin: 0 0 36px; }
+  .boat h2 img { display: block; width: min(444px, 55vw); height: auto; }
+  .boat__eyebrow { display:flex; align-items:center; justify-content:flex-end; gap:12px; border-top:1px solid #ded8c2; padding:16px 0 24px; margin:0; font-size:18px; background:var(--cream); }
+  .boat__eyebrow span { width:10px; height:10px; background:var(--red); }
+  .boat__stage { display:grid; grid-template-columns:1fr 1fr; gap:10px; height: min(797px, calc(100svh - 110px)); min-height:360px; }
+  .boat__card { display:flex; flex-direction:column; padding:24px 12px 12px; background:#0c1d37; border-radius:5px; }
+  .boat h3 { color:white; font-family:Georgia,serif; font-size:clamp(28px, 2.8vw, 40px); font-weight:400; margin:0 12px; }
+  .boat__tabs { display:flex; flex-direction:column; justify-content:center; flex:1; gap:20px; padding:36px 12px; }
+  .boat__tabs button { display:flex; align-items:baseline; gap:16px; border:0; padding:0; background:none; text-align:left; font-family:Georgia,serif; font-size:clamp(25px,2.8vw,40px); line-height:1.2; color:#ffb7b7; cursor:pointer; transition:color 300ms; }
+  .boat__tabs button:hover, .boat__tabs button[aria-selected='true'] { color:white; }
+  .boat__dot { width:0; height:18px; flex-shrink:0; align-self:center; border-radius:50%; background:white; opacity:0; transition:width 350ms,opacity 350ms; }
+  .boat__tabs button:not([aria-selected='true']) { gap:0; }
+  .boat__tabs button[aria-selected='true'] .boat__dot { width:22px; height:22px; opacity:1; }
+  .boat__descriptions { background:#eae1c1; color:var(--navy); border-radius:3px; padding:14px 12px; min-height:80px; display:grid; align-items:center; }
+  .boat__descriptions p { margin:0; font-size:18px; line-height:1.4; }
+  .boat__photos { position:relative; min-width:0; overflow:hidden; border-radius:5px; background:#0c1d37; }
+  .boat__panel { height:100%; }
+  .boat__panel img { display:block; width:100%; height:100%; object-fit:cover; }
+  [hidden] { display:none !important; }
+  @media(max-width:760px) { .boat {padding:64px 16px;} .boat__header {margin-bottom:24px;} .boat h2 {margin-bottom:24px;} .boat__eyebrow {font-size:14px;padding-top:16px;} .boat__stage {height:auto;min-height:0;grid-template-columns:1fr;} .boat__card {min-height:420px;} .boat__tabs {gap:20px;padding:32px 12px;} .boat__descriptions p {font-size:16px;} .boat__photos {aspect-ratio:1 / 1;} }
+  @media(prefers-reduced-motion:reduce) { .boat__tabs button,.boat__dot {transition:none;} }
+  @media(min-width:761px) and (max-height:650px) { .boat__card {padding-top:16px;} .boat h3 {font-size:28px;} .boat__tabs {gap:12px;padding:20px 12px;} .boat__tabs button {font-size:clamp(22px,2.2vw,30px);} .boat__descriptions {min-height:64px;} .boat__descriptions p {font-size:15px;} }
+  @media(max-width:760px) { .boat__runway { min-height:0; } .boat__sticky { position:static; } }
+</style>

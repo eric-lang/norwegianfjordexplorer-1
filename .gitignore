@@ -1,0 +1,13 @@
+node_modules/
+.astro/
+dist/
+.pnpm-store/
+.cache/
+.env
+.env.*
+!.env.example
+*.log
+.vercel/
+.netlify/
+design-inspection/
+*.fig
