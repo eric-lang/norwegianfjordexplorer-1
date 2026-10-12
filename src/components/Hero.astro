@@ -10,7 +10,7 @@ const destinations = [
 ---
 
 <section id="home" class="hero" aria-labelledby="hero-heading">
-  <img class="hero__image" src="/images/arctic-fjord.webp" alt="An expedition ship cruising through a dramatic Norwegian fjord" width="1006" height="713" fetchpriority="high" loading="eager" />
+  <img class="hero__image" src="/images/arctic-fjord.webp" alt="An expedition ship cruising through a dramatic Norwegian fjord" width="1006" height="713" fetchpriority="high" /><video class="hero__image hero__video" poster="/images/arctic-fjord.webp" muted loop playsinline preload="none" aria-hidden="true" data-hero-video></video>
   <div class="hero__shade" aria-hidden="true"></div>
 
   <header class="site-header">
@@ -56,6 +56,25 @@ const destinations = [
 </dialog>
 
 <script>
+  const heroVideo=document.querySelector<HTMLVideoElement>('[data-hero-video]');
+  if(heroVideo) {
+    const heroVideoMotion=matchMedia('(prefers-reduced-motion: reduce)');
+    let heroInView=true;
+    function syncHeroVideo() {
+      if(heroVideoMotion.matches||document.hidden||!heroInView) {heroVideo!.pause();return;}
+      if(!heroVideo!.getAttribute('src'))heroVideo!.src=matchMedia('(max-width:47.5rem)').matches?'/videos/hero-video-mobile.mp4':'/videos/hero-video-web.mp4';
+      heroVideo!.muted=true;heroVideo!.defaultPlaybackRate=.2;heroVideo!.playbackRate=.2;
+      heroVideo!.play().catch(()=>{});
+    }
+    heroVideo.addEventListener('playing',()=>heroVideo!.classList.add('is-playing'));
+    heroVideo.addEventListener('error',()=>heroVideo!.classList.remove('is-playing'));
+    heroVideo.addEventListener('loadedmetadata',()=>{heroVideo!.playbackRate=.2;});
+    heroVideoMotion.addEventListener('change',syncHeroVideo);
+    document.addEventListener('visibilitychange',syncHeroVideo);
+    new IntersectionObserver(entries=>{heroInView=entries[0].isIntersecting;syncHeroVideo();},{threshold:0}).observe(heroVideo.closest('.hero')!);
+    syncHeroVideo();
+  }
+
   const menuToggle = document.querySelector<HTMLButtonElement>('.menu-toggle');
   const mobileMenu = document.querySelector<HTMLElement>('#mobile-menu');
   const dialog = document.querySelector<HTMLDialogElement>('.section-dialog');
@@ -179,5 +198,10 @@ const destinations = [
   @keyframes nav-item-enter { from { opacity: 0; transform: translateY(-2.25rem); filter: blur(0.5rem); } to { opacity: 1; transform: translateY(0); filter: blur(0); } }
   @keyframes menu-open { from { opacity: 0; clip-path: inset(0 0 100% 35% round 1.125rem); transform: translateY(-0.75rem) scale(.94); } to { opacity: 1; clip-path: inset(0 0 0 0 round 1.125rem); transform: translateY(0) scale(1); } }
   @keyframes menu-item-enter { from { opacity: 0; transform: translateY(1.75rem); filter: blur(0.3125rem); } to { opacity: 1; transform: translateY(0); filter: blur(0); } }
+
+.hero__video {opacity:0;pointer-events:none;}
+.hero__video.is-playing {opacity:1;}
+
+@media(prefers-reduced-motion:reduce) {.hero .hero__video {display:none!important;}}
 </style>
 
