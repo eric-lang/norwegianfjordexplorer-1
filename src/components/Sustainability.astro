@@ -40,22 +40,22 @@
   }
 </script>
 <style>
-  .sustainability {padding:120px 10px;background:var(--cream);color:var(--navy);}
-  .sustainability__header {display:grid;grid-template-columns:1.28fr 1fr;gap:40px;align-items:center;margin-bottom:48px;}
-  .sustainability__label {display:flex;align-items:center;gap:12px;margin:0 0 10px;font:500 18px/1.5 var(--font-body);}
-  .sustainability__label span {width:10px;height:10px;background:var(--red);}
-  .sustainability h2 {margin:0;color:#1e1e1e;font:400 clamp(42px,5vw,72px)/1.05 Georgia,serif;letter-spacing:-.045em;}
-  .sustainability__intro,.sustainability__outro {margin:0;font:700 18px/1.5 var(--font-body);}
-  .sustainability__film {position:relative;aspect-ratio:1420/618;overflow:hidden;border-radius:5px;background:var(--navy);}
+  .sustainability {padding:7.5rem 0.625rem;background:var(--cream);color:var(--navy);}
+  .sustainability__header {display:grid;grid-template-columns:1.28fr 1fr;gap:2.5rem;align-items:center;margin-bottom:3rem;}
+  .sustainability__label {display:flex;align-items:center;gap:0.75rem;margin:0 0 0.625rem;font:500 1.125rem/1.5 var(--font-body);}
+  .sustainability__label span {width:0.625rem;height:0.625rem;background:var(--red);}
+  .sustainability h2 {margin:0;color:#1e1e1e;font:400 clamp(2.625rem,5vw,4.5rem)/1.05 Georgia,serif;letter-spacing:-.045em;}
+  .sustainability__intro,.sustainability__outro {margin:0;font:700 1.125rem/1.5 var(--font-body);}
+  .sustainability__film {position:relative;aspect-ratio:1420/618;overflow:hidden;border-radius:0.3125rem;background:var(--navy);}
   .sustainability__video {display:block;width:100%;height:100%;object-fit:cover;}
   .sustainability__shade {position:absolute;inset:0;pointer-events:none;background:rgb(0 0 0 / .4);transition:opacity 400ms;}
-  .sustainability__play {position:absolute;top:50%;left:50%;translate:-50% -50%;display:grid;place-items:center;width:90px;height:90px;padding:0;border:2px solid #d9d9d9;border-radius:50%;background:rgb(255 255 255 / .16);color:#d9d9d9;cursor:pointer;backdrop-filter:blur(4px);transition:background 250ms,color 250ms,scale 250ms;}
-  .sustainability__play svg {width:39px;height:39px;}
+  .sustainability__play {position:absolute;top:50%;left:50%;translate:-50% -50%;display:grid;place-items:center;width:5.625rem;height:5.625rem;padding:0;border:0.125rem solid #d9d9d9;border-radius:50%;background:rgb(255 255 255 / .16);color:#d9d9d9;cursor:pointer;backdrop-filter:blur(0.25rem);transition:background 250ms,color 250ms,scale 250ms;}
+  .sustainability__play svg {width:2.4375rem;height:2.4375rem;}
   .sustainability__play:hover {background:var(--cream);color:var(--navy);scale:1.08;}
   .sustainability__film.is-playing .sustainability__shade {opacity:0;}
-  .sustainability__outro {width:50%;margin:48px 0 0 auto;}
-  .sustainability__error {position:absolute;bottom:16px;left:16px;right:16px;margin:0;padding:12px;border-radius:3px;background:var(--cream);font-size:14px;}
+  .sustainability__outro {width:50%;margin:3rem 0 0 auto;}
+  .sustainability__error {position:absolute;bottom:1rem;left:1rem;right:1rem;margin:0;padding:0.75rem;border-radius:0.1875rem;background:var(--cream);font-size:0.875rem;}
   [hidden] {display:none!important;}
-  @media(max-width:760px) {.sustainability {padding:64px 16px;}.sustainability__header {grid-template-columns:1fr;gap:24px;margin-bottom:32px;}.sustainability__label {font-size:14px;}.sustainability__intro,.sustainability__outro {font-size:16px;}.sustainability__film {aspect-ratio:4/3;}.sustainability__play {width:64px;height:64px;}.sustainability__play svg {width:29px;height:29px;}.sustainability__outro {width:auto;margin-top:32px;}}
+  @media(max-width:47.5rem) {.sustainability {padding:4rem 1rem;}.sustainability__header {grid-template-columns:1fr;gap:1.5rem;margin-bottom:2rem;}.sustainability__label {font-size:0.875rem;}.sustainability__intro,.sustainability__outro {font-size:1rem;}.sustainability__film {aspect-ratio:4/3;}.sustainability__play {width:4rem;height:4rem;}.sustainability__play svg {width:1.8125rem;height:1.8125rem;}.sustainability__outro {width:auto;margin-top:2rem;}}
   @media(prefers-reduced-motion:reduce) {.sustainability__shade,.sustainability__play {transition:none;}}
 </style>

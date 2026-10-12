@@ -21,21 +21,21 @@ import BookingLink from './BookingLink.astro';
   </div>
 </section>
 <style>
-  .about {padding:120px 16px;background:var(--cream);color:var(--navy);}
-  .about__header {margin-bottom:32px;}
-  .about__label {display:flex;align-items:center;justify-content:flex-end;gap:12px;border-bottom:1px solid rgb(27 54 97 / .25);margin:0 0 10px;padding-bottom:16px;font:500 18px/1.5 var(--font-body);}
-  .about__label span {width:10px;height:10px;background:var(--red);}
-  .about h2 {max-width:1000px;margin:0;color:#1e1e1e;font:400 clamp(52px,8.333vw,120px)/1.1 Georgia,serif;letter-spacing:-.045em;}
+  .about {padding:7.5rem 1rem;background:var(--cream);color:var(--navy);}
+  .about__header {margin-bottom:2rem;}
+  .about__label {display:flex;align-items:center;justify-content:flex-end;gap:0.75rem;border-bottom:0.0625rem solid rgb(27 54 97 / .25);margin:0 0 0.625rem;padding-bottom:1rem;font:500 1.125rem/1.5 var(--font-body);}
+  .about__label span {width:0.625rem;height:0.625rem;background:var(--red);}
+  .about h2 {max-width:62.5rem;margin:0;color:#1e1e1e;font:400 clamp(3.25rem,8.333vw,7.5rem)/1.1 Georgia,serif;letter-spacing:-.045em;}
   .about h2 em {font-weight:400;}
-  .about__layout {display:grid;grid-template-columns:958fr 386fr;gap:64px;align-items:stretch;}
-  .about__photo {aspect-ratio:958/661;overflow:hidden;border-radius:5px;}
+  .about__layout {display:grid;grid-template-columns:958fr 386fr;gap:4rem;align-items:stretch;}
+  .about__photo {aspect-ratio:958/661;overflow:hidden;border-radius:0.3125rem;}
   .about__photo img {display:block;width:100%;height:100%;object-fit:cover;transform:scale(1.035);transition:transform 900ms cubic-bezier(.22,1,.36,1);}
   .about__photo:hover img {transform:scale(1);}
-  .about__content {display:flex;flex-direction:column;justify-content:space-between;gap:40px;min-width:0;}
-  .about__welcome {margin:0;color:var(--red);font:400 32px/1.4 Georgia,serif;letter-spacing:-.045em;}
-  .about__story p {margin:0 0 10px;font:700 18px/1.5 var(--font-body);}
-  .about__story :global(.booking-link) {margin-top:22px;}
-  @media(max-width:1000px) and (min-width:761px) {.about__layout {gap:32px;grid-template-columns:2fr 1fr;}.about__welcome {font-size:27px;}.about__story p {font-size:16px;}}
-  @media(max-width:760px) {.about {padding:64px 16px;}.about__label {font-size:14px;}.about h2 {font-size:clamp(44px,8.8vw,66px);}.about__layout {grid-template-columns:1fr;gap:28px;}.about__content {gap:28px;}.about__welcome {font-size:28px;}.about__story p {font-size:16px;}}
+  .about__content {display:flex;flex-direction:column;justify-content:space-between;gap:2.5rem;min-width:0;}
+  .about__welcome {margin:0;color:var(--red);font:400 2rem/1.4 Georgia,serif;letter-spacing:-.045em;}
+  .about__story p {margin:0 0 0.625rem;font:700 1.125rem/1.5 var(--font-body);}
+  .about__story :global(.booking-link) {margin-top:1.375rem;}
+  @media(max-width:62.5rem) and (min-width:47.5625rem) {.about__layout {gap:2rem;grid-template-columns:2fr 1fr;}.about__welcome {font-size:1.6875rem;}.about__story p {font-size:1rem;}}
+  @media(max-width:47.5rem) {.about {padding:4rem 1rem;}.about__label {font-size:0.875rem;}.about h2 {font-size:clamp(2.75rem,8.8vw,4.125rem);}.about__layout {grid-template-columns:1fr;gap:1.75rem;}.about__content {gap:1.75rem;}.about__welcome {font-size:1.75rem;}.about__story p {font-size:1rem;}}
   @media(prefers-reduced-motion:reduce) {.about__photo img {transition:none;transform:none;}}
 </style>

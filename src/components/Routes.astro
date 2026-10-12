@@ -14,7 +14,7 @@ const markers = routeStops.filter(stop => !('grouped' in stop) || stop.id === 's
       <div class="route-map__canvas">
       <img src="/images/routes-map.svg" alt="Illustrated Arctic cruise routes along the coast of Northern Norway" width="696" height="724" loading="lazy" />
       {markers.map(stop => <button class="route-map__marker" type="button" data-stop={stop.id} style={`left:${stop.point[0] / 696 * 100}%;top:${stop.point[1] / 724 * 100}%`} aria-label={`Explore ${stop.id === 'stamsund' ? 'Western Lofoten' : stop.name}`} aria-haspopup="dialog" aria-expanded={stop.id === initialStop.id ? 'true' : 'false'} aria-controls="route-stop-details" hidden><span aria-hidden="true"></span></button>)}
-      <div class="route-map__popup" id="route-stop-details" role="dialog" aria-modal="false" aria-labelledby="route-stop-title" style={`left:clamp(12px,calc(${initialStop.point[0] / 696 * 100}% - 140px),calc(100% - 292px));bottom:calc(${100 - initialStop.point[1] / 724 * 100}% + 24px)`}>
+      <div class="route-map__popup" id="route-stop-details" role="dialog" aria-modal="false" aria-labelledby="route-stop-title" style={`left:clamp(0.75rem,calc(${initialStop.point[0] / 696 * 100}% - 8.75rem),calc(100% - 18.25rem));bottom:calc(${100 - initialStop.point[1] / 724 * 100}% + 1.5rem)`}>
         <button class="route-map__close" type="button" aria-label="Close location details">×</button>
         <p class="route-map__eyebrow" data-stop-region>{initialStop.region}</p>
         <h3 id="route-stop-title">{initialStop.name}</h3>
@@ -57,12 +57,13 @@ const markers = routeStops.filter(stop => !('grouped' in stop) || stop.id === 's
       const x = canvas.clientWidth * active.point[0] / 696;
       const y = canvas.clientHeight * active.point[1] / 724;
       const left = Math.max(12, Math.min(x - popup.offsetWidth / 2, canvas.clientWidth - popup.offsetWidth - 12));
-      popup.style.left = `${left}px`;
+      const rootUnit = Number.parseFloat(getComputedStyle(document.documentElement).fontSize);
+      popup.style.left = `${left / rootUnit}rem`;
       const below = active.point[1] / 724 < .28;
       popup.dataset.placement = below ? 'below' : 'above';
-      popup.style.top = below ? `${y + 24}px` : 'auto';
-      popup.style.bottom = below ? 'auto' : `${canvas.clientHeight - y + 24}px`;
-      popup.style.setProperty('--arrow-left', `${x - left}px`);
+      popup.style.top = below ? `${(y + 1.5 * rootUnit) / rootUnit}rem` : 'auto';
+      popup.style.bottom = below ? 'auto' : `${(canvas.clientHeight - y + 1.5 * rootUnit) / rootUnit}rem`;
+      popup.style.setProperty('--arrow-left', `${(x - left) / rootUnit}rem`);
     }
     function dismiss(returnFocus = false) {
       if (!popup || !opened) return;
@@ -132,40 +133,40 @@ const markers = routeStops.filter(stop => !('grouped' in stop) || stop.id === 's
   }
 </script>
 <style>
-  .routes { padding:110px 16px 120px; background:var(--cream); color:var(--navy); scroll-margin-top:24px; }
-  .routes__eyebrow { display:flex; justify-content:flex-end; align-items:center; gap:12px; margin:0 0 24px; padding-bottom:24px; border-bottom:1px solid #ded8c2; font-size:18px; }
-  .routes__eyebrow span { width:10px; height:10px; background:var(--red); }
-  .routes h2 { margin:0 0 48px; max-width:1050px; color:#1e1e1e; font-family:'PP Pangaia',Georgia,'Times New Roman',serif; font-size:clamp(48px,8.333vw,120px); font-weight:400; line-height:1.1; letter-spacing:-.035em; }
+  .routes { padding:6.875rem 1rem 7.5rem; background:var(--cream); color:var(--navy); scroll-margin-top:1.5rem; }
+  .routes__eyebrow { display:flex; justify-content:flex-end; align-items:center; gap:0.75rem; margin:0 0 1.5rem; padding-bottom:1.5rem; border-bottom:0.0625rem solid #ded8c2; font-size:1.125rem; }
+  .routes__eyebrow span { width:0.625rem; height:0.625rem; background:var(--red); }
+  .routes h2 { margin:0 0 3rem; max-width:65.625rem; color:#1e1e1e; font-family:'PP Pangaia',Georgia,'Times New Roman',serif; font-size:clamp(3rem,8.333vw,7.5rem); font-weight:400; line-height:1.1; letter-spacing:-.035em; }
   .routes h2 em { font-weight:700; }
-  .routes__grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
-  .routes__map { position:relative; z-index:1; display:flex; flex-direction:column; justify-content:center; align-items:center; margin:0; background:#8b0505; border-radius:5px; border-top:32px solid #8b0505; border-bottom:32px solid #8b0505; }
+  .routes__grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+  .routes__map { position:relative; z-index:1; display:flex; flex-direction:column; justify-content:center; align-items:center; margin:0; background:#8b0505; border-radius:0.3125rem; border-top:2rem solid #8b0505; border-bottom:2rem solid #8b0505; }
   .routes__map img { display:block; width:100%; height:auto; }
   .route-map__canvas { position:relative; width:100%; }
-  .route-map__marker { position:absolute; z-index:2; width:24px; height:24px; transform:translate(-50%,-50%); border:0; padding:0; background:transparent; cursor:pointer; border-radius:50%; }
+  .route-map__marker { position:absolute; z-index:2; width:1.5rem; height:1.5rem; transform:translate(-50%,-50%); border:0; padding:0; background:transparent; cursor:pointer; border-radius:50%; }
   .route-map__marker:is(:hover,:focus-visible) { z-index:4; }
-  .route-map__marker span { display:block; width:15px; height:15px; margin:auto; background:#ffff00; border:2px solid var(--cream); border-radius:50%; box-shadow:0 0 0 6px rgb(255 250 231 / .2); transition:box-shadow 220ms,transform 220ms; }
-  .route-map__marker:is(:hover,:focus-visible,[aria-expanded='true']) span { transform:scale(1.15); box-shadow:0 0 0 9px rgb(255 250 231 / .3); }
-  .route-map__popup { position:absolute; z-index:3; width:min(280px,calc(100% - 24px)); padding:22px; background:var(--cream); color:var(--navy); border-radius:12px; box-shadow:0 14px 36px rgb(0 0 0 / .25); transform-origin:var(--arrow-left, 50%) calc(100% + 24px); }
-  .route-map__popup::after { content:''; position:absolute; left:var(--arrow-left); bottom:-8px; width:16px; height:16px; transform:translateX(-50%) rotate(45deg); background:var(--cream); }
-  .route-map__popup[data-placement='below'] { transform-origin:var(--arrow-left,50%) -24px; }
-  .route-map__popup[data-placement='below']::after { top:-8px; bottom:auto; }
-  .route-map__close { position:absolute; top:8px; right:8px; width:32px; height:32px; border:0; border-radius:50%; background:transparent; color:var(--navy); font-size:25px; cursor:pointer; }
+  .route-map__marker span { display:block; width:0.9375rem; height:0.9375rem; margin:auto; background:#ffff00; border:0.125rem solid var(--cream); border-radius:50%; box-shadow:0 0 0 0.375rem rgb(255 250 231 / .2); transition:box-shadow 220ms,transform 220ms; }
+  .route-map__marker:is(:hover,:focus-visible,[aria-expanded='true']) span { transform:scale(1.15); box-shadow:0 0 0 0.5625rem rgb(255 250 231 / .3); }
+  .route-map__popup { position:absolute; z-index:3; width:min(17.5rem,calc(100% - 1.5rem)); padding:1.375rem; background:var(--cream); color:var(--navy); border-radius:0.75rem; box-shadow:0 0.875rem 2.25rem rgb(0 0 0 / .25); transform-origin:var(--arrow-left, 50%) calc(100% + 1.5rem); }
+  .route-map__popup::after { content:''; position:absolute; left:var(--arrow-left); bottom:-0.5rem; width:1rem; height:1rem; transform:translateX(-50%) rotate(45deg); background:var(--cream); }
+  .route-map__popup[data-placement='below'] { transform-origin:var(--arrow-left,50%) -1.5rem; }
+  .route-map__popup[data-placement='below']::after { top:-0.5rem; bottom:auto; }
+  .route-map__close { position:absolute; top:0.5rem; right:0.5rem; width:2rem; height:2rem; border:0; border-radius:50%; background:transparent; color:var(--navy); font-size:1.5625rem; cursor:pointer; }
   .route-map__close:hover { background:#eae1c1; }
-  .route-map__popup .route-map__eyebrow { margin:0 24px 8px 0; font-size:11px; letter-spacing:.08em; text-transform:uppercase; }
-  .route-map__popup h3 { margin:0 0 10px; font-size:30px; line-height:1.1; }
-  .route-map__popup p { margin:0 0 16px; font-size:14px; line-height:1.5; }
-  .route-map__popup a { display:inline-flex; align-items:center; gap:12px; font-size:13px; font-weight:700; text-decoration:underline; text-underline-offset:4px; }
+  .route-map__popup .route-map__eyebrow { margin:0 1.5rem 0.5rem 0; font-size:0.6875rem; letter-spacing:.08em; text-transform:uppercase; }
+  .route-map__popup h3 { margin:0 0 0.625rem; font-size:1.875rem; line-height:1.1; }
+  .route-map__popup p { margin:0 0 1rem; font-size:0.875rem; line-height:1.5; }
+  .route-map__popup a { display:inline-flex; align-items:center; gap:0.75rem; font-size:0.8125rem; font-weight:700; text-decoration:underline; text-underline-offset:0.25rem; }
   .route-map__popup a:hover { color:var(--red); }
-  .route-map__nearby { display:block; margin:16px 0 0; padding:12px 0 0; border:0; border-top:1px solid #ded8c2; background:transparent; color:var(--navy); font:600 12px/1.4 var(--font-body); text-align:left; cursor:pointer; }
+  .route-map__nearby { display:block; margin:1rem 0 0; padding:0.75rem 0 0; border:0; border-top:0.0625rem solid #ded8c2; background:transparent; color:var(--navy); font:600 0.75rem/1.4 var(--font-body); text-align:left; cursor:pointer; }
   .route-map__nearby:hover { color:var(--red); }
-  .route-map__selector { display:flex; align-items:center; justify-content:space-between; gap:16px; width:calc(100% - 32px); padding-top:16px; color:var(--cream); font-size:13px; }
-  .route-map__selector select { min-width:0; max-width:65%; min-height:44px; border:1px solid rgb(255 250 231 / .45); border-radius:6px; padding:8px 12px; padding-right:calc(12px + 1rem); color:var(--navy); background:var(--cream); }
+  .route-map__selector { display:flex; align-items:center; justify-content:space-between; gap:1rem; width:calc(100% - 2rem); padding-top:1rem; color:var(--cream); font-size:0.8125rem; }
+  .route-map__selector select { min-width:0; max-width:65%; min-height:2.75rem; border:0.0625rem solid rgb(255 250 231 / .45); border-radius:0.375rem; padding:0.5rem 0.75rem; padding-right:calc(0.75rem + 1rem); color:var(--navy); background:var(--cream); }
   [hidden] { display:none !important; }
-  @media(prefers-reduced-motion:no-preference) { .route-map__marker span { animation:marker-pulse 2600ms ease-in-out infinite; } @keyframes marker-pulse { 0%,100% {scale:1;translate:0 0;} 50% {scale:1.1;translate:0 -1px;} } }
+  @media(prefers-reduced-motion:no-preference) { .route-map__marker span { animation:marker-pulse 2600ms ease-in-out infinite; } @keyframes marker-pulse { 0%,100% {scale:1;translate:0 0;} 50% {scale:1.1;translate:0 -0.0625rem;} } }
   @media(prefers-reduced-motion:reduce) { .route-map__marker span {transition:none;} }
-  .routes__card { display:flex; flex-direction:column; justify-content:space-between; gap:80px; padding:36px 24px; border-radius:5px; background:#0c1d37; color:white; }
-  .routes h3 { font-family:Georgia,serif; font-weight:400; font-size:clamp(28px,2.8vw,40px); line-height:1.35; margin:0; max-width:610px; }
-  .routes__details { max-width:500px; }
-  .routes__details p { font-size:18px; line-height:1.55; margin:0 0 26px; }
-  @media(max-width:760px) { .routes {padding:64px 16px;} .routes__eyebrow {font-size:14px;padding-bottom:16px;margin-bottom:20px;} .routes h2 {margin-bottom:28px;} .routes__grid {grid-template-columns:1fr;gap:12px;} .routes__map {border-width:20px;} .routes__card {padding:28px 20px;gap:64px;} .routes h3 {font-size:30px;} .routes__details p {font-size:16px;} }
+  .routes__card { display:flex; flex-direction:column; justify-content:space-between; gap:5rem; padding:2.25rem 1.5rem; border-radius:0.3125rem; background:#0c1d37; color:white; }
+  .routes h3 { font-family:Georgia,serif; font-weight:400; font-size:clamp(1.75rem,2.8vw,2.5rem); line-height:1.35; margin:0; max-width:38.125rem; }
+  .routes__details { max-width:31.25rem; }
+  .routes__details p { font-size:1.125rem; line-height:1.55; margin:0 0 1.625rem; }
+  @media(max-width:47.5rem) { .routes {padding:4rem 1rem;} .routes__eyebrow {font-size:0.875rem;padding-bottom:1rem;margin-bottom:1.25rem;} .routes h2 {margin-bottom:1.75rem;} .routes__grid {grid-template-columns:1fr;gap:0.75rem;} .routes__map {border-width:1.25rem;} .routes__card {padding:1.75rem 1.25rem;gap:4rem;} .routes h3 {font-size:1.875rem;} .routes__details p {font-size:1rem;} }
 </style>
