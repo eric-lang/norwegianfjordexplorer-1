@@ -38,9 +38,9 @@ const destinations = [
     </div>
     <div class="hero__intro">
       <h1 id="hero-heading">
-        <span class="sr-only">Authentic Arctic Cruise in Norway</span>
-        <span class="hero__heading-line"><img class="hero__heading-art" src="/images/hero-heading-line-1.svg" alt="" width="713" height="105" aria-hidden="true" /></span>
-        <span class="hero__heading-line"><img class="hero__heading-art" src="/images/hero-heading-line-2.svg" alt="" width="713" height="105" aria-hidden="true" /></span>
+        
+        <span class="hero__heading-line">Authentic Arctic</span>
+        <span class="hero__heading-line">Cruise In Norway</span>
       </h1>
       <p>More than just a boat, TROMSØ Trips offers authentic Arctic cruise in Norway experiences with a unique restaurant, bar, and kitchen on board.</p>
     </div>
@@ -113,8 +113,7 @@ const destinations = [
   .hero__destinations { display: flex; flex-direction: column; justify-content: space-between; align-items: flex-start; padding: 18px 0 0; }
   .hero__destinations nav { display: flex; flex-direction: column; gap: 16px; }
   .hero__destinations :is(button, a) { font-family: var(--font-body); font-size: clamp(15px, 1.326vw, 22px); font-weight: 600; text-transform: uppercase; letter-spacing: -.035em; line-height: 1.4; }
-  .hero__intro h1 { margin: 0; font-weight: 400; }
-  .hero__heading-art { width: 100%; height: auto; display: block; }
+  .hero__intro h1 { margin: 0; font:400 clamp(44px,6.65vw,128px)/1.1 Georgia,"Times New Roman",serif; letter-spacing:-.05em; }
   .hero__heading-line { display: block; }
   .hero__intro p { margin: 32px 0 0; max-width: 713px; font-size: clamp(16px, 1.25vw, 21px); font-weight: 400; line-height: 1.5; letter-spacing: -.015em; }
   .section-dialog { width: min(480px, calc(100% - 32px)); padding: 40px; border: 0; border-radius: 16px; background: var(--cream); color: var(--navy); }
@@ -144,6 +143,7 @@ const destinations = [
     .mobile-nav :is(button, a):is(:hover, :focus-visible) { background: #eae1c1; padding-left: 20px; }
     .mobile-nav :is(button, a):is(:hover, :focus-visible)::after { opacity: 1; }
     .hero__content { left: 24px; right: 24px; bottom: max(36px, env(safe-area-inset-bottom)); display: flex; flex-direction: column-reverse; gap: 34px; }
+    .hero__intro h1 {font-size:clamp(38px,8.7vw,66px);}
     .hero__intro p { margin-top: 22px; font-size: 16px; max-width: 520px; line-height: 1.6; }
     .hero__destinations { padding: 0; gap: 28px; }
     .hero__destinations nav { gap: 10px; }
@@ -166,8 +166,8 @@ const destinations = [
     .mobile-nav > :nth-child(4) { animation-delay: 380ms; }
     .header-booking { animation-delay: 160ms; }
     .hero__heading-line { animation: hero-enter 900ms cubic-bezier(.22, 1, .36, 1) both; }
-    .hero__heading-line:nth-of-type(2) { animation-delay: 280ms; }
-    .hero__heading-line:nth-of-type(3) { animation-delay: 400ms; }
+    .hero__heading-line:nth-of-type(1) { animation-delay: 280ms; }
+    .hero__heading-line:nth-of-type(2) { animation-delay: 400ms; }
     .hero__intro p { animation: hero-enter 850ms 520ms cubic-bezier(.22, 1, .36, 1) both; }
     .hero__destinations nav a { animation: hero-enter 700ms cubic-bezier(.22, 1, .36, 1) both; }
     .hero__destinations nav a:nth-child(1) { animation-delay: 440ms; }

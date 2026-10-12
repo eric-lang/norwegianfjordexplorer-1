@@ -8,7 +8,7 @@ const offerings = [
 ---
 <section class="boat" id="vessel" aria-labelledby="boat-heading">
   <header class="boat__header">
-    <h2 id="boat-heading"><span class="sr-only">The Boat</span><img src="/images/boat-heading.svg" alt="" width="444" height="132" aria-hidden="true" /></h2>
+    <h2 id="boat-heading">The Boat</h2>
   </header>
   <div class="boat__runway">
   <div class="boat__sticky">
@@ -96,8 +96,7 @@ const offerings = [
   .boat__header { margin-bottom: 40px; }
   .boat__runway { min-height: calc(max(360px, min(797px, 100svh - 110px)) + 63px + clamp(240px, 55svh, 640px)); }
   .boat__sticky { position: sticky; top: 0; }
-  .boat h2 { margin: 0 0 36px; }
-  .boat h2 img { display: block; width: min(444px, 55vw); height: auto; }
+  .boat h2 { margin:0 0 36px; font:400 clamp(64px,8.33vw,120px)/1.1 Georgia,serif; letter-spacing:-.04em; }
   .boat__eyebrow { display:flex; align-items:center; justify-content:flex-end; gap:12px; border-top:1px solid #ded8c2; padding:16px 0 24px; margin:0; font-size:18px; background:var(--cream); }
   .boat__eyebrow span { width:10px; height:10px; background:var(--red); }
   .boat__stage { display:grid; grid-template-columns:1fr 1fr; gap:10px; height: min(797px, calc(100svh - 110px)); min-height:360px; }

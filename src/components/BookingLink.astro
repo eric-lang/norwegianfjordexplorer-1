@@ -11,17 +11,18 @@ const { variant = 'cream', hover, class: className } = Astro.props;
 </a>
 
 <style>
-  .booking-link { --cta-height: 44px; --cta-background: var(--cream); --cta-color: var(--navy); position: relative; isolation: isolate; display: inline-flex; align-items: center; gap: 0; width: max-content; text-decoration: none; color: var(--cta-color); transition: color 220ms ease; }
-  .booking-link__label { position: relative; z-index: 2; display: flex; align-items: center; justify-content: center; height: var(--cta-height); min-width: 112px; border-radius: 999px; padding: 0 23px; background: var(--cta-background); font-size: 13px; line-height: 1; font-weight: 700; white-space: nowrap; transition: background-color 220ms ease, transform 480ms cubic-bezier(.22,1,.36,1); }
-  .booking-link__arrow { position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; flex: 0 0 var(--cta-height); width: var(--cta-height); height: var(--cta-height); border-radius: 50%; background: var(--cta-background); transition: background-color 220ms ease, transform 480ms cubic-bezier(.22,1,.36,1), opacity 300ms ease; }
-  .booking-link__arrow--leading { position: absolute; left: 0; transform: scale(.65); opacity: 0; visibility: hidden; }
-  .booking-link:is(:hover, :focus-visible) .booking-link__label { transform: translateX(var(--cta-height)); }
-  .booking-link:is(:hover, :focus-visible) .booking-link__arrow--leading { transform: scale(1); opacity: 1; visibility: visible; }
-  .booking-link:is(:hover, :focus-visible) .booking-link__arrow--trailing { transform: scale(.65); opacity: 0; visibility: hidden; }
-  .booking-link__arrow :global(svg) { display: block; flex: none; width: 18px; height: 18px; }
-  .booking-link--red { --cta-background: var(--red); --cta-color: var(--cream); }
-  .booking-link:is(:hover, :focus-visible) { --cta-background: var(--red); --cta-color: var(--cream); }
-  .booking-link--red:is(:hover, :focus-visible) { --cta-background: var(--cream); --cta-color: var(--navy); }
-  .booking-link--hover-navy:is(:hover, :focus-visible) { --cta-background: var(--navy); --cta-color: var(--cream); }
-  @media (prefers-reduced-motion: reduce) { .booking-link, .booking-link__label, .booking-link__arrow { transition: none; } }
+  .booking-link {--cta-height:44px;--cta-background:var(--cream);--cta-color:var(--navy);position:relative;isolation:isolate;display:inline-flex;align-items:center;flex:none;width:156px;height:var(--cta-height);color:var(--cta-color);text-decoration:none;transition:color 250ms ease;}
+  .booking-link__label {position:relative;z-index:2;display:grid;place-items:center;width:112px;flex:none;height:var(--cta-height);padding:0 23px;border-radius:999px;background:var(--cta-background);font:700 13px/1 var(--font-body);white-space:nowrap;pointer-events:none;transition:background-color 250ms ease,transform 480ms cubic-bezier(.22,1,.36,1);}
+  .booking-link__arrow {position:absolute;top:0;right:0;display:grid;place-items:center;width:var(--cta-height);height:var(--cta-height);border-radius:50%;background:var(--cta-background);pointer-events:none;transition:background-color 250ms ease,transform 480ms cubic-bezier(.22,1,.36,1),opacity 250ms ease;}
+  .booking-link__arrow--leading {left:0;right:auto;transform:scale(.65);opacity:0;visibility:hidden;}
+  .booking-link__arrow--trailing {transform:scale(1);opacity:1;visibility:visible;}
+  .booking-link:is(:hover,:focus-visible) .booking-link__label {transform:translateX(var(--cta-height));}
+  .booking-link:is(:hover,:focus-visible) .booking-link__arrow--leading {transform:scale(1);opacity:1;visibility:visible;}
+  .booking-link:is(:hover,:focus-visible) .booking-link__arrow--trailing {transform:scale(.65);opacity:0;visibility:hidden;}
+  .booking-link__arrow :global(svg) {display:block;width:18px;height:18px;}
+  .booking-link--red {--cta-background:var(--red);--cta-color:var(--cream);}
+  .booking-link:is(:hover,:focus-visible) {--cta-background:var(--red);--cta-color:var(--cream);}
+  .booking-link--red:is(:hover,:focus-visible) {--cta-background:var(--cream);--cta-color:var(--navy);}
+  .booking-link--hover-navy:is(:hover,:focus-visible) {--cta-background:var(--navy);--cta-color:var(--cream);}
+  @media(prefers-reduced-motion:reduce) {.booking-link,.booking-link__label,.booking-link__arrow {transition:none;}}
 </style>

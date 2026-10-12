@@ -6,10 +6,7 @@ const captions = ['Stay a little longer. Explore a little further.', 'Slow morni
 
 <section class="experiences" id="experiences" aria-labelledby="experiences-heading">
   <div class="experiences__header" data-reveal>
-    <h2 id="experiences-heading">
-      <span class="sr-only">Choose your Experience</span>
-      <img src="/images/experiences-heading.svg" alt="" aria-hidden="true" width="724" height="65" loading="lazy" />
-    </h2>
+    <h2 id="experiences-heading">Choose your Experience</h2>
     <span class="experiences__eyebrow"><span aria-hidden="true"></span>Cruises</span>
   </div>
 
@@ -101,8 +98,7 @@ const captions = ['Stay a little longer. Explore a little further.', 'Slow morni
 <style>
   .experiences { padding: 120px 16px; background: var(--cream); scroll-margin-top: 24px; }
   .experiences__header { display: flex; justify-content: space-between; align-items: center; gap: 32px; margin-bottom: 66px; }
-  .experiences h2 { margin: 0; width: min(724px, 75%); }
-  .experiences h2 img { display: block; width: 100%; height: auto; }
+  .experiences h2 { margin:0; width:min(900px,75%); font:400 clamp(36px,4.45vw,64px)/1.05 Georgia,serif; letter-spacing:-.035em; }
   .experiences__eyebrow { display: inline-flex; align-items: center; gap: 12px; font-size: 18px; white-space: nowrap; }
   .experiences__eyebrow > span { width: 10px; height: 10px; background: var(--red); }
   .experience-tabs { display: flex; align-items: center; gap: 14px; margin-bottom: 22px; padding: 2px 0 2px; overflow-x: auto; scrollbar-width: thin; }
