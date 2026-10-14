@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import ScrollReveal from '../components/ScrollReveal.astro';
+import SmoothScroll from '../components/SmoothScroll.astro';
 
 interface Props {
   title?: string;
@@ -27,6 +28,6 @@ const {
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
     <slot />
-    <ScrollReveal />
+    <ScrollReveal /><SmoothScroll />
   </body>
 </html>

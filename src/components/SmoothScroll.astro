@@ -1,0 +1,26 @@
+<script>
+  import Lenis from 'lenis';
+  import 'lenis/dist/lenis.css';
+  const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)');
+  let smoothScroll:Lenis|undefined;
+  function configureScroll() {
+    smoothScroll?.destroy();smoothScroll=undefined;
+    if(reducedMotion.matches)return;
+    smoothScroll=new Lenis({
+      autoRaf:true,
+      lerp:.22,
+      wheelMultiplier:1,
+      syncTouch:false,
+      anchors:true,
+      prevent:node=>Boolean(node.closest('dialog,.crew-gallery__track,.route-map__canvas,.route-map__popup,.stop-card__detail,.sail-card__detail,.boat__stage')),
+    });
+  }
+  reducedMotion.addEventListener('change',configureScroll);
+  configureScroll();
+  window.addEventListener('pagehide',()=>smoothScroll?.destroy());
+  window.addEventListener('pageshow',event=>{if(event.persisted)configureScroll();});
+</script>
+<style is:global>
+  html.lenis,html.lenis body {height:auto;}
+  html.lenis.lenis-smooth {scroll-behavior:auto!important;}
+</style>
