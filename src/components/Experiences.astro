@@ -110,7 +110,7 @@ const captions = ['Stay a little longer. Explore a little further.', 'Slow morni
   .experience-panel[hidden] { display: none; }
   .experience-panel:focus-visible { outline-offset: 0.5rem; }
   .experience-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.125rem 0.625rem; }
-  .experience-card { --card-background: #eae1c1; display: flex; flex-direction: column; min-width: 0; border-radius: 0.3125rem; overflow: hidden; color: var(--navy); background: var(--card-background); text-decoration: none; box-shadow: 0 0 2rem 0.875rem rgb(0 0 0 / .02); transition: background-color 280ms ease, color 280ms ease, box-shadow 280ms ease; }
+  .experience-card { --card-background: #f5eed5; display: flex; flex-direction: column; min-width: 0; border-radius: 0.3125rem; overflow: hidden; color: var(--navy); background: var(--card-background); text-decoration: none; box-shadow: 0 0 2rem 0.875rem rgb(0 0 0 / .02); transition: background-color 280ms ease, color 280ms ease, box-shadow 280ms ease; }
   .experience-card__photo { position: relative; overflow: hidden; aspect-ratio: 462.667 / 363; background: #183744; }
   .experience-card__photo > img { display: block; width: 100%; height: 100%; object-fit: cover; transform: scale(1.065); transition: transform 850ms cubic-bezier(.22, 1, .36, 1); }
   .experience-card__photo::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgb(0 0 0 / .08), rgb(0 0 0 / .12) 45%, rgb(0 0 0 / .48)); opacity: 0; pointer-events: none; transition: opacity 600ms ease; }
@@ -123,7 +123,7 @@ const captions = ['Stay a little longer. Explore a little further.', 'Slow morni
   .experience-card__detail { display: flex; align-items: center; gap: 1rem; margin: auto 0 1.5rem; font-size: 0.875rem; line-height: 1.5; }
   .experience-card__detail svg { flex: none; }
   .experience-card__price { margin: 0; border-top: 0.0625rem solid rgb(27 54 97 / .14); padding-top: 1.5rem; font-size: 1rem; line-height: 1.5; transition: border-color 280ms ease; }
-  .experience-card:is(:hover, :focus-visible) { --card-background: #fffdf7; background: var(--card-background); color: #0c1d37; box-shadow: 0 0.75rem 1.875rem rgb(27 54 97 / .08); }
+  .experience-card:is(:hover, :focus-visible) { --card-background: #f5eed5; background: var(--card-background); color: #0c1d37; box-shadow: 0 0.75rem 1.875rem rgb(27 54 97 / .08); }
   .experience-card:is(:hover, :focus-visible) .experience-card__photo > img { transform: scale(1.005); }
   .experience-card:is(:hover, :focus-visible) .experience-card__photo::after { opacity: 1; }
   .experience-card:is(:hover, :focus-visible) .experience-card__caption { opacity: 1; transform: translateY(0); }
